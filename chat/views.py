@@ -8,15 +8,17 @@ from django.contrib.auth.models import User
 from django.views.generic import CreateView, TemplateView
 from .forms import UserCreateForm, LoginForm
 
+
 def index(request):
     return render(request, 'chat/index.html', {})
-    
+ 
 @login_required
 def room(request, room_name):
     return render(request, 'chat/room.html', {
         'room_name_json': mark_safe(json.dumps(room_name)),
         'username': mark_safe(json.dumps(request.user.username)),
     })
+
 class Create_Account(CreateView):
     def post(self, request, *args, **kwargs):
         form = UserCreateForm(data=request.POST)
@@ -37,6 +39,7 @@ class Create_Account(CreateView):
         return  render(request, 'chat/create.html', {'form': form,})
 
 #ログイン
+
 class Account_login(View):
     def post(self, request, *arg, **kwargs):
         form = LoginForm(data=request.POST)

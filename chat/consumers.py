@@ -37,15 +37,13 @@ class ChatConsumer(WebsocketConsumer):
         return result
 
     def message_to_json(self, message):
-        '''
         translator = Translator()
-        translated = translator.translate(message.content).text
-        '''
+       
         p = re.compile('[a-zA-Z,.!?]+')
         if p.fullmatch(message.content):
-            translated = 'English'
+            translated = ''
         else:
-            translated = '日本語'
+            translated = translator.translate(message.content).text
         return {
             'author': message.author.username,
             'content': message.content,
